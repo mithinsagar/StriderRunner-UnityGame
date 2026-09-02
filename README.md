@@ -14,18 +14,19 @@ License: MIT
 ## Table of Contents
 
 1. Overview
-2. Features
-3. Technology Stack
-4. Repository Layout
-5. Getting Started
-6. Controls
-7. Gameplay Systems
-8. Building the Game
-9. Scripts Reference
-10. Contributing
-11. Roadmap
-12. Credits
-13. License
+2. Screenshots
+3. Features
+4. Technology Stack
+5. Repository Layout
+6. Getting Started
+7. Controls
+8. Gameplay Systems
+9. Building the Game
+10. Scripts Reference
+11. Contributing
+12. Roadmap
+13. Credits
+14. License
 
 ---
 
@@ -42,7 +43,21 @@ Unity 2D platformer development, showcasing the new Input System, ScriptableObje
 based character data, a lightweight audio manager, and a save system built on
 PlayerPrefs.
 
-## 2. Features
+## 2. Screenshots
+
+| Start Screen | Character Selection |
+| --- | --- |
+| ![Start Screen](docs/screenshots/Start-Screen.png) | ![Character Selection](docs/screenshots/CharacterSelection-Menu.png) |
+
+| Gameplay | Gameplay |
+| --- | --- |
+| ![Gameplay Level 2](docs/screenshots/Gameplay-Level2.png) | ![Gameplay Level 3](docs/screenshots/Gameplay-Level3.png) |
+
+| Gameplay | Pause Menu | Extra Lives |
+| --- | --- | --- |
+| ![Gameplay Level 4](docs/screenshots/Gameplay-Level4.png) | ![Pause Menu](docs/screenshots/Pause-Menu.png) | ![Extra Lives](docs/screenshots/ExtraLives-Menu.png) |
+
+## 3. Features
 
 - Tight 2D character controller with movement, flip, jump, extra (double) jump,
   wall grab, wall slide, wall jump, and air dash.
@@ -60,7 +75,7 @@ PlayerPrefs.
 - PlayerPrefs-based save system covering unlocked levels, lives, and settings.
 - Camera follower with configurable dead-zone and shake on impact.
 
-## 3. Technology Stack
+## 4. Technology Stack
 
 - Unity Engine (2D URP-compatible project template)
 - C# scripts (`.NET` runtime shipped with Unity)
@@ -72,7 +87,7 @@ PlayerPrefs.
 Verified with Unity 2022 LTS and Unity 6 (any release supporting the package
 versions listed in `Packages/manifest.json`).
 
-## 4. Repository Layout
+## 5. Repository Layout
 
 ```
 strider-runner/
@@ -145,7 +160,7 @@ strider-runner/
     └── FUNDING.yml
 ```
 
-## 5. Getting Started
+## 6. Getting Started
 
 Prerequisites: Unity Hub, a Unity Editor install compatible with the version
 recorded in `ProjectSettings/ProjectVersion.txt`, and Git.
@@ -166,21 +181,24 @@ recorded in `ProjectSettings/ProjectVersion.txt`, and Git.
 4. In the Project window open `Assets/Scenes/Start Screen.unity` and press
    Play.
 
-## 6. Controls
+## 7. Controls
 
 Default keyboard layout (see `docs/Controls.md` for the full reference):
 
 - Move: A / D or Left / Right arrows
-- Jump: Space
+- Jump: Space (also triggers a wall jump while clinging to a wall, or an
+  extra air jump)
 - Dash: Left Shift
-- Wall Grab: hold Left Shift against a wall
-- Attack (sword-equipped character): J
-- Pause: Esc
+- Wall Grab & Slide: automatic while airborne against a wall, for characters
+  with wall grab enabled — no button needed
+- Attack (sword-equipped character): K
+- Pause: P
 
 Gamepad bindings are defined in `Assets/Input/PlayerInputActions.inputactions`
-and can be rebound at runtime through the Settings menu.
+and can be rebound at runtime through the Settings menu. The melee attack is
+currently keyboard-only; no gamepad binding is wired up for it yet.
 
-## 7. Gameplay Systems
+## 8. Gameplay Systems
 
 - Player movement is authored in `Assets/Scripts/Player/PlayerMovement.cs`.
   Movement, dash, jump, wall grab, wall jump, and animation state transitions
@@ -196,7 +214,7 @@ and can be rebound at runtime through the Settings menu.
   `LevelManager`, `LevelLoader`, and `LevelStatus`.
 - Traps and interactive objects live under `Assets/Scripts/Objects/`.
 
-## 8. Building the Game
+## 9. Building the Game
 
 See `docs/BuildInstructions.md` for platform-specific steps. In short:
 
@@ -205,7 +223,7 @@ See `docs/BuildInstructions.md` for platform-specific steps. In short:
    `Start Screen` first, `Level1` through `Level7` next, then `End Screen`.
 3. Pick a target platform, click "Switch Platform", then "Build".
 
-## 9. Scripts Reference
+## 10. Scripts Reference
 
 - `Player/PlayerMovement.cs` - character controller.
 - `Player/PlayerLife.cs` - health, damage, respawn.
@@ -224,17 +242,17 @@ See `docs/BuildInstructions.md` for platform-specific steps. In short:
 - `UI/*` - menus and HUD.
 - `Utilities/MonobehaviourSingleton.cs` - generic singleton base class.
 
-## 10. Contributing
+## 11. Contributing
 
 Contributions are welcome. Please read `CONTRIBUTING.md` before opening a pull
 request. All contributions are made under the terms of the project license.
 
-## 11. Roadmap
+## 12. Roadmap
 
 See `docs/Roadmap.md`. Highlights: gamepad UI navigation, input rebinding UI,
 background parallax, additional enemy archetypes, and screen transition fades.
 
-## 12. Credits
+## 13. Credits
 
 - Design, programming, and integration: Mithin Sagar S
   (https://github.com/mithinsagar)
@@ -242,6 +260,6 @@ background parallax, additional enemy archetypes, and screen transition fades.
 - Sound effects and music are sourced from openly licensed libraries; see
   `docs/GameDesign.md` for the attribution list.
 
-## 13. License
+## 14. License
 
 Released under the MIT License. See the `LICENSE` file at the project root.
