@@ -11,6 +11,13 @@
 # The workflow uses the game-ci actions to activate a license, run edit-mode
 # and play-mode tests, and build for Windows and WebGL. Adjust the target
 # matrix as needed.
+#
+# Those credentials are not configured on this repo yet, so both jobs below
+# check for the license secret's presence before running: without it, the
+# Unity Editor step has nothing valid to activate with and every run would
+# fail the same way regardless of what the code does. The check reports the
+# run as skipped instead of failed until real credentials are added, rather
+# than leaving a permanently red, code-unrelated check on every commit.
 
 name: Unity CI
 
@@ -21,9 +28,27 @@ on:
     branches: [ "main" ]
 
 jobs:
+  check-secrets:
+    name: Check Unity credentials
+    runs-on: ubuntu-latest
+    outputs:
+      has-license: ${{ steps.check.outputs.has-license }}
+    steps:
+      - id: check
+        run: |
+          if [ -n "$UNITY_LICENSE_SET" ]; then
+            echo "has-license=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-license=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          UNITY_LICENSE_SET: ${{ secrets.UNITY_LICENSE }}
+
   test:
     name: Test in Editor
     runs-on: ubuntu-latest
+    needs: check-secrets
+    if: needs.check-secrets.outputs.has-license == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -60,7 +85,8 @@ jobs:
   build:
     name: Build ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
-    needs: test
+    needs: [check-secrets, test]
+    if: needs.check-secrets.outputs.has-license == 'true'
     strategy:
       fail-fast: false
       matrix:
